@@ -4,8 +4,6 @@ import fr.tt54.topluck.Main;
 import fr.tt54.topluck.manager.InvManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -23,7 +21,6 @@ public class InvListener implements Listener {
                     if (Bukkit.getPlayer(event.getCurrentItem().getItemMeta().getDisplayName().substring(2)) != null) {
                         event.getWhoClicked().openInventory(InvManager.getTopLuckPlayerInventory(event.getCurrentItem().getItemMeta().getDisplayName().substring(2)));
                     } else {
-                        ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.ENTITY_VILLAGER_NO, .5f, .5f);
                         event.getWhoClicked().openInventory(InvManager.getTopLuckInventory());
                         event.getWhoClicked().sendMessage(Main.getMessages().getMessage("notconnected"));
                     }
@@ -37,7 +34,6 @@ public class InvListener implements Listener {
                         event.getWhoClicked().closeInventory();
                         event.getWhoClicked().teleport(Bukkit.getPlayer(event.getClickedInventory().getName().split(" ")[1].substring(2)));
                     } else {
-                        ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.ENTITY_VILLAGER_NO, .5f, .5f);
                         event.getWhoClicked().openInventory(InvManager.getTopLuckInventory());
                         event.getWhoClicked().sendMessage(Main.getMessages().getMessage("notconnected"));
                     }
@@ -48,7 +44,6 @@ public class InvListener implements Listener {
                         Bukkit.getPlayer(event.getClickedInventory().getName().split(" ")[1].substring(2)).sendMessage(Main.getMessages().getMessage("clear"));
                         event.getWhoClicked().sendMessage(Main.getMessages().getMessage("cleared", "%player%", event.getClickedInventory().getName().split(" ")[1].substring(2)));
                     } else {
-                        ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.ENTITY_VILLAGER_NO, .5f, .5f);
                         event.getWhoClicked().openInventory(InvManager.getTopLuckInventory());
                         event.getWhoClicked().sendMessage(Main.getMessages().getMessage("notconnected"));
                     }

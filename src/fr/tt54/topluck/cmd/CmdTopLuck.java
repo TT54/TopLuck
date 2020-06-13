@@ -4,7 +4,6 @@ import fr.tt54.topluck.Main;
 import fr.tt54.topluck.manager.InvManager;
 import fr.tt54.topluck.utils.Permission;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,7 +47,6 @@ public class CmdTopLuck implements CommandExecutor, TabCompleter {
 
                     ((Player) sender).openInventory(InvManager.getTopLuckPlayerInventory(args[0]));
                     sender.sendMessage(Main.getMessages().getMessage("playertopluckopened", "%player%", args[0]));
-                    ((Player) sender).playSound(((Player) sender).getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, .5f, .5f);
                     return true;
                 } else {
                     sender.sendMessage(Main.getMessages().getBadUsageMessage("/" + label));
@@ -60,7 +58,6 @@ public class CmdTopLuck implements CommandExecutor, TabCompleter {
         if (Permission.hasPermission(sender, "topluck.see")) {
             ((Player) sender).openInventory(InvManager.getTopLuckInventory());
             sender.sendMessage(Main.getMessages().getMessage("topluckopened"));
-            ((Player) sender).playSound(((Player) sender).getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, .5f, .5f);
             return true;
         } else {
             sender.sendMessage(Main.getMessages().getMessage("notpermission"));

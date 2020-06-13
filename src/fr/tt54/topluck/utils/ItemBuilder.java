@@ -43,7 +43,7 @@ public class ItemBuilder {
     public ItemBuilder setSkullOf(OfflinePlayer player) {
         if (this.item.getType() == Material.SKULL_ITEM) {
             SkullMeta meta = (SkullMeta) this.item.getItemMeta();
-            meta.setOwningPlayer(player);
+            meta.setOwner(player.getName());
             this.item.setItemMeta(meta);
         }
         return this;
@@ -132,8 +132,6 @@ public class ItemBuilder {
         LOOTING(Enchantment.LOOT_BONUS_MOBS),
         PROTECTION(Enchantment.PROTECTION_ENVIRONMENTAL),
         PUNCH(Enchantment.ARROW_KNOCKBACK),
-        CURSE_OF_VANISHING(Enchantment.VANISHING_CURSE),
-        CURSE_OF_BINDING(Enchantment.BINDING_CURSE),
         RESPIRATION(Enchantment.OXYGEN),
         FIRE_PROTECTION(Enchantment.PROTECTION_FIRE),
         EXPLOSION_PROTECTION(Enchantment.PROTECTION_EXPLOSIONS),
