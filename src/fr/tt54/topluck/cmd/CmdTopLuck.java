@@ -28,7 +28,6 @@ public class CmdTopLuck implements CommandExecutor, TabCompleter {
             if (args[0].equalsIgnoreCase("reload") && args.length == 1) {
                 if (Permission.hasPermission(sender, "topluck.reload")) {
                     Main.getInstance().reload();
-                    sender.sendMessage(Main.getMessages().getMessage("reload"));
                     System.out.println(Main.getMessages().getMessage("reload"));
                     return true;
                 } else {
