@@ -84,11 +84,11 @@ public class CmdTopLuck implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         List<String> msg = new ArrayList<>();
         if (args.length == 1) {
-            if (Permission.hasPermission(sender, "topluck.reload"))
+            if (Permission.hasPermission(sender, "topluck.reload") && "reload".startsWith(args[0]))
                 msg.add("reload");
 
             if (Permission.hasPermission(sender, "topluck.see"))
-                msg.addAll(Bukkit.getOnlinePlayers().stream().map(Player::getName).filter(name -> name.startsWith(args[0])).collect(Collectors.toList()));
+                msg.addAll(Bukkit.getOnlinePlayers().stream().map(Player::getName).filter(name -> name.toLowerCase().startsWith(args[0].toLowerCase())).collect(Collectors.toList()));
         }
         return (msg.isEmpty()) ? Collections.emptyList() : msg;
     }
