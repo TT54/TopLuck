@@ -19,6 +19,16 @@ public class CmdTopLuck implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) {
+            if (args[0].equalsIgnoreCase("reload") && args.length == 1) {
+                Main.getInstance().reload();
+                System.out.println(Main.getMessages().getMessage("reload"));
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (Permission.hasPermission(player, "topluck.reload")) {
+                        player.sendMessage(Main.getMessages().getMessage("reload"));
+                    }
+                }
+                return true;
+            }
             sender.sendMessage(Main.getMessages().getMessage("notplayer"));
             return false;
         }
@@ -28,6 +38,11 @@ public class CmdTopLuck implements CommandExecutor, TabCompleter {
                 if (Permission.hasPermission(sender, "topluck.reload")) {
                     Main.getInstance().reload();
                     System.out.println(Main.getMessages().getMessage("reload"));
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        if (Permission.hasPermission(player, "topluck.reload")) {
+                            player.sendMessage(Main.getMessages().getMessage("reload"));
+                        }
+                    }
                     return true;
                 } else {
                     sender.sendMessage(Main.getMessages().getMessage("notpermission"));

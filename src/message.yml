@@ -19,3 +19,10 @@ playertopluckopened: "&aVous venez d'accéder au topluck de %player%"
 
 clear: "§cVous venez d'être clear"
 cleared: "§aVous venez de clear %player%"
+
+inventory:
+  lastconnection: "&7Dernière connexion : &f%percent%% §8(%number%)"
+  begin: "&7Depuis le début : &f%percent%% §8(%number%)"
+  quit: "&cQuitter"
+  teleport: "&9Se téléporter"
+  clear: "&cClear"

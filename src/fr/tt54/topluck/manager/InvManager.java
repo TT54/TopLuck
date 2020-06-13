@@ -1,5 +1,6 @@
 package fr.tt54.topluck.manager;
 
+import fr.tt54.topluck.Main;
 import fr.tt54.topluck.utils.ItemBuilder;
 import fr.tt54.topluck.utils.MaterialType;
 import org.bukkit.Bukkit;
@@ -15,7 +16,8 @@ import java.util.List;
 public class InvManager {
 
     public static Inventory getTopLuckInventory() {
-        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§6TopLuck");
+        TopLuckManager.saveTopLuck();
+        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§cTopLuck");
         List<Player> playersTemp = new ArrayList<>(Bukkit.getOnlinePlayers());
         List<Player> playersSorted = new ArrayList<>();
         List<Player> players = new ArrayList<>();
@@ -48,12 +50,13 @@ public class InvManager {
     }
 
     public static Inventory getTopLuckPlayerInventory(String playerName) {
+        TopLuckManager.saveTopLuck();
         Inventory inv = Bukkit.createInventory(null, 9 * 6, "§cTopLuck §4" + playerName);
 
         ItemBuilder stoneBuilder = new ItemBuilder(Material.STONE);
         stoneBuilder.setName("§7Stone");
-        stoneBuilder.addLoreLine("§7Dernière connexion : §f" + TopLuckManager.getLastStonePercent(Bukkit.getPlayer(playerName)) + "% §8(" + TopLuckManager.getLastOrePercent(Bukkit.getPlayer(playerName), new MaterialType(1, 0)) + ")");
-        stoneBuilder.addLoreLine("§7Depuis le début : §f" + TopLuckManager.getTotalStonePercent(Bukkit.getPlayer(playerName)) + "% §8(" + TopLuckManager.getTotalStoneMined(Bukkit.getPlayer(playerName)) + ")");
+        stoneBuilder.addLoreLine(Main.getMessages().getMessage("inventory.lastconnection", "%percent%", TopLuckManager.getLastStonePercent(Bukkit.getPlayer(playerName)), "%number%", "" + TopLuckManager.getResourceMinedFromLastCo(Bukkit.getPlayer(playerName), new MaterialType(1, 0))));
+        stoneBuilder.addLoreLine(Main.getMessages().getMessage("inventory.begin", "%percent%", TopLuckManager.getTotalStonePercent(Bukkit.getPlayer(playerName)), "%number%", "" + TopLuckManager.getTotalStoneMined(Bukkit.getPlayer(playerName))));
         inv.setItem(0, stoneBuilder.build());
 
         for (int i = 0; i < Math.min(9 * 5 - 1, TopLuckManager.blockCounted.size()); i++) {
@@ -65,14 +68,14 @@ public class InvManager {
                 name += ":" + type.getData();
 
             builder.setName("§7" + name);
-            builder.addLoreLine("§7Dernière connexion : §f" + TopLuckManager.getLastOrePercent(Bukkit.getPlayer(playerName), type) + "% §8(" + TopLuckManager.getResourceMinedFromLastCo(Bukkit.getPlayer(playerName), type) + ")");
-            builder.addLoreLine("§7Depuis le début : §f" + TopLuckManager.getTotalOrePercent(Bukkit.getPlayer(playerName), type) + "% §8(" + TopLuckManager.getTotalOresMined(Bukkit.getPlayer(playerName), type) + ")");
+            builder.addLoreLine(Main.getMessages().getMessage("inventory.lastconnection", "%percent%", TopLuckManager.getLastOrePercent(Bukkit.getPlayer(playerName), type), "%number%", "" + TopLuckManager.getResourceMinedFromLastCo(Bukkit.getPlayer(playerName), type)));
+            builder.addLoreLine(Main.getMessages().getMessage("inventory.begin", "%percent%", TopLuckManager.getTotalOrePercent(Bukkit.getPlayer(playerName), type), "%number%", "" + TopLuckManager.getTotalOresMined(Bukkit.getPlayer(playerName), type)));
             inv.setItem(i + 1, builder.build());
         }
 
-        inv.setItem(9 * 6 - 1, new ItemBuilder(Material.BARRIER).setName("§cQuitter").build());
-        inv.setItem(49, new ItemBuilder(Material.ENDER_PEARL).setName("§9Se téléporter").build());
-        inv.setItem(48, new ItemBuilder(Material.CHEST).setName("§cClear").build());
+        inv.setItem(9 * 6 - 1, new ItemBuilder(Material.BARRIER).setName(Main.getMessages().getMessage("inventory.quit")).build());
+        inv.setItem(49, new ItemBuilder(Material.ENDER_PEARL).setName(Main.getMessages().getMessage("inventory.teleport")).build());
+        inv.setItem(48, new ItemBuilder(Material.CHEST).setName(Main.getMessages().getMessage("inventory.clear")).build());
 
         return inv;
     }

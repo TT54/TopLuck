@@ -15,7 +15,7 @@ public class InvListener implements Listener {
     @EventHandler
     public void onInvClick(InventoryClickEvent event) {
         if (event.getClickedInventory() != null) {
-            if (event.getClickedInventory().getName().equals("§6TopLuck")) {
+            if (event.getClickedInventory().getName().equals("§cTopLuck")) {
                 event.setCancelled(true);
                 if (event.getCurrentItem().getType() == Material.SKULL_ITEM) {
                     if (Bukkit.getPlayer(event.getCurrentItem().getItemMeta().getDisplayName().substring(2)) != null) {
@@ -27,9 +27,9 @@ public class InvListener implements Listener {
                 }
             } else if (event.getClickedInventory().getName().contains("§cTopLuck ")) {
                 event.setCancelled(true);
-                if (event.getCurrentItem().getType() == Material.BARRIER && event.getCurrentItem().getItemMeta().getDisplayName().equals("§cQuitter")) {
+                if (event.getCurrentItem().getType() == Material.BARRIER && event.getCurrentItem().getItemMeta().getDisplayName().equals(Main.getMessages().getMessage("inventory.quit"))) {
                     event.getWhoClicked().openInventory(InvManager.getTopLuckInventory());
-                } else if (event.getCurrentItem().getType() == Material.ENDER_PEARL && event.getCurrentItem().getItemMeta().getDisplayName().equals("§9Se téléporter")) {
+                } else if (event.getCurrentItem().getType() == Material.ENDER_PEARL && event.getCurrentItem().getItemMeta().getDisplayName().equals(Main.getMessages().getMessage("inventory.teleport"))) {
                     if (Bukkit.getPlayer(event.getClickedInventory().getName().split(" ")[1].substring(2)) != null) {
                         event.getWhoClicked().closeInventory();
                         event.getWhoClicked().teleport(Bukkit.getPlayer(event.getClickedInventory().getName().split(" ")[1].substring(2)));
@@ -37,7 +37,7 @@ public class InvListener implements Listener {
                         event.getWhoClicked().openInventory(InvManager.getTopLuckInventory());
                         event.getWhoClicked().sendMessage(Main.getMessages().getMessage("notconnected"));
                     }
-                } else if (event.getCurrentItem().getType() == Material.CHEST && event.getCurrentItem().getItemMeta().getDisplayName().equals("§cClear")) {
+                } else if (event.getCurrentItem().getType() == Material.CHEST && event.getCurrentItem().getItemMeta().getDisplayName().equals(Main.getMessages().getMessage("inventory.clear"))) {
                     if (Bukkit.getPlayer(event.getClickedInventory().getName().split(" ")[1].substring(2)) != null) {
                         Bukkit.getPlayer(event.getClickedInventory().getName().split(" ")[1].substring(2)).getInventory().setArmorContents(new ItemStack[4]);
                         Bukkit.getPlayer(event.getClickedInventory().getName().split(" ")[1].substring(2)).getInventory().clear();
