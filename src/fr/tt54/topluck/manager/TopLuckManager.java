@@ -42,17 +42,26 @@ public class TopLuckManager {
         topLuck = YamlConfiguration.loadConfiguration(FileManager.getFile("topluck", Main.getInstance()));
         blockCounted = new ArrayList<>();
         for (String matId : Main.getInstance().getConfig().getStringList("materialsverified")) {
-            if (Material.getMaterial(matId.split(":")[0]) != null) {
-                String typeName = matId.split(":")[0];
+            if (Material.getMaterial(matId.split(":")[0].toUpperCase()) != null) {
+                String typeName = matId.split(":")[0].toUpperCase();
                 int meta = 0;
                 try {
                     try {
-                        meta = Integer.parseInt(matId.split(":")[1]);
+                        meta = Integer.parseInt(matId.split(":")[1].split(";")[0]);
                     } catch (ArrayIndexOutOfBoundsException ignore) {
                     }
                 } catch (NumberFormatException ignore) {
                 }
-                MaterialType type = new MaterialType(typeName, meta);
+                int displayId = Material.getMaterial(typeName).getId();
+                try {
+                    try {
+                        displayId = Integer.parseInt(matId.split(";")[1]);
+                    } catch (ArrayIndexOutOfBoundsException ignore) {
+                    }
+                } catch (NumberFormatException ignore) {
+                }
+                System.out.println(displayId);
+                MaterialType type = new MaterialType(typeName, meta, displayId);
                 if (!containsBlock(type)) {
                     blockCounted.add(type);
                 }
@@ -65,12 +74,20 @@ public class TopLuckManager {
                         int meta = 0;
                         try {
                             try {
-                                meta = Integer.parseInt(matId.split(":")[1]);
+                                meta = Integer.parseInt(matId.split(":")[1].split(";")[0]);
                             } catch (ArrayIndexOutOfBoundsException ignore) {
                             }
                         } catch (NumberFormatException ignore) {
                         }
-                        MaterialType type = new MaterialType(id, meta);
+                        int displayId = id;
+                        try {
+                            try {
+                                displayId = Integer.parseInt(matId.split(";")[1]);
+                            } catch (ArrayIndexOutOfBoundsException ignore) {
+                            }
+                        } catch (NumberFormatException ignore) {
+                        }
+                        MaterialType type = new MaterialType(id, meta, displayId);
                         if (!containsBlock(type)) {
                             blockCounted.add(type);
                         }

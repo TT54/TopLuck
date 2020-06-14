@@ -48,7 +48,7 @@ public class InvManager {
             inv.setItem(i, builder.build());
         }
 
-        if (players.size() > page * 5 * 9) {
+        if (players.size() > (page + 1) * 5 * 9) {
             inv.setItem(53, new ItemBuilder(Material.PAPER).setName(Main.getMessages().getMessage("inventory.nextpage")).build());
         }
         if (page != 0) {
@@ -70,7 +70,7 @@ public class InvManager {
 
         for (int i = 0; i < Math.min(9 * 5 - 1, TopLuckManager.blockCounted.size()); i++) {
             MaterialType type = TopLuckManager.blockCounted.get(i);
-            ItemBuilder builder = new ItemBuilder(new ItemStack(type.getType(), 1, (byte) type.getData()));
+            ItemBuilder builder = new ItemBuilder(new ItemStack(type.getDisplayId(), 1, (byte) type.getData()));
 
             String name = type.getType().name().substring(0, 1).toUpperCase() + type.getType().name().toLowerCase().replace("_", " ").substring(1);
             if (type.getData() != 0)
