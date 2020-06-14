@@ -3,6 +3,7 @@ package fr.tt54.topluck.manager;
 import fr.tt54.topluck.Main;
 import fr.tt54.topluck.utils.ItemBuilder;
 import fr.tt54.topluck.utils.MaterialType;
+import fr.tt54.topluck.utils.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -12,13 +13,14 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InvManager {
 
-    public static Inventory getTopLuckInventory() {
+    public static Inventory getTopLuckInventory(int page) {
         TopLuckManager.saveTopLuck();
-        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§cTopLuck");
-        List<Player> playersTemp = new ArrayList<>(Bukkit.getOnlinePlayers());
+        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§cTopLuck Page §4" + (page + 1));
+        List<Player> playersTemp = new ArrayList<>(Bukkit.getOnlinePlayers()).stream().filter(player -> !(!Main.getInstance().getConfig().getBoolean("showbypass") && Permission.hasPermission(player, "topluck.showbypass"))).collect(Collectors.toList());
         List<Player> playersSorted = new ArrayList<>();
         List<Player> players = new ArrayList<>();
         for (Player p : playersTemp) {
@@ -34,16 +36,23 @@ public class InvManager {
             players.add(pwin);
         }
 
-        for (int i = 0; i < (Math.min(players.size(), 9 * 5)); i++) {
+        for (int i = page * 9 * 5; i < (Math.min(players.size(), (page + 1) * 9 * 5)); i++) {
             ItemBuilder builder = new ItemBuilder(new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())).setName("§6" + (players.get(i)).getName()).setSkullOf(players.get(i))
                     .addLoreLine("§7Stone : §f" + TopLuckManager.getStonePercent(players.get(i)) + "% §8(" + TopLuckManager.getShowedStoneMined(players.get(i)) + ")");
             for (MaterialType type : TopLuckManager.blockCounted) {
-                String name = Material.getMaterial(type.getId()).name().substring(0, 1).toUpperCase() + Material.getMaterial(type.getId()).name().toLowerCase().replace("_", " ").substring(1);
+                String name = type.getType().name().substring(0, 1).toUpperCase() + type.getType().name().toLowerCase().replace("_", " ").substring(1);
                 if (type.getData() != 0)
                     name += ":" + type.getData();
                 builder = builder.addLoreLine("§7" + name + " : §f" + TopLuckManager.getOrePercent(players.get(i), type) + "% §8(" + TopLuckManager.getShowedOreMined(players.get(i), type) + ")");
             }
             inv.setItem(i, builder.build());
+        }
+
+        if (players.size() > page * 5 * 9) {
+            inv.setItem(53, new ItemBuilder(Material.PAPER).setName(Main.getMessages().getMessage("inventory.nextpage")).build());
+        }
+        if (page != 0) {
+            inv.setItem(45, new ItemBuilder(Material.PAPER).setName(Main.getMessages().getMessage("inventory.lastpage")).build());
         }
 
         return inv;
@@ -61,9 +70,9 @@ public class InvManager {
 
         for (int i = 0; i < Math.min(9 * 5 - 1, TopLuckManager.blockCounted.size()); i++) {
             MaterialType type = TopLuckManager.blockCounted.get(i);
-            ItemBuilder builder = new ItemBuilder(new ItemStack(Material.getMaterial(type.getId()), 1, (byte) type.getData()));
+            ItemBuilder builder = new ItemBuilder(new ItemStack(type.getType(), 1, (byte) type.getData()));
 
-            String name = Material.getMaterial(type.getId()).name().substring(0, 1).toUpperCase() + Material.getMaterial(type.getId()).name().toLowerCase().replace("_", " ").substring(1);
+            String name = type.getType().name().substring(0, 1).toUpperCase() + type.getType().name().toLowerCase().replace("_", " ").substring(1);
             if (type.getData() != 0)
                 name += ":" + type.getData();
 

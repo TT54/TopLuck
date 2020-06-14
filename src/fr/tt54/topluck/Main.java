@@ -14,8 +14,8 @@ public class Main extends JavaPlugin {
 
     private static Messages messages;
     private static Main instance;
-    private String configVersion = "1.0.0";
-    private String messagesVersion = "1.0.0";
+    private String configVersion = "1.1";
+    private String messagesVersion = "1.1";
 
     @Override
     public void onEnable() {

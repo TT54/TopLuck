@@ -26,8 +26,8 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE || !Main.getInstance().getConfig().getBoolean("creativebypass")) {
-            if (TopLuckManager.containsBlock(new MaterialType(event.getBlock().getType().getId(), event.getBlock().getData()))) {
-                TopLuckManager.mine(event.getPlayer(), event.getBlock().getType().getId(), event.getBlock().getData());
+            if (TopLuckManager.containsBlock(new MaterialType(event.getBlock().getType().name(), event.getBlock().getData()))) {
+                TopLuckManager.mine(event.getPlayer(), event.getBlock().getType().name(), event.getBlock().getData());
             } else if (event.getBlock().getType() == Material.STONE) {
                 TopLuckManager.mineStone(event.getPlayer());
             }

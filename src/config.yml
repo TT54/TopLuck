@@ -1,11 +1,13 @@
-configversion: 1.0.0
-messagenotfound: "&cCe message n'a pas été trouvé ! Veuillez contacter un administrateur dès que possible !"
+configversion: 1.1
+messagenotfound: "&cThis message was not found ! Please contact a administrator as fast as you can !"
 materialsverified:
   - "56:0"
   - "14:0"
   - "129:0"
 
-#Ne compte pas les joueurs en créatif
+#The plugin doesn't count the blocks broke in creative
 creativebypass: true
-#Montre les statistiques depuis la dernière session de minage des joueurs lors du /topluck
+#If true, show the statistics of the actual mining session. If false, show all the blocks mined from the installation of the plugin
 showlastonprofil: true
+#If false, the players who have the permission topluck.showbypass are not showed in the topluck inventory
+showbypass: true
