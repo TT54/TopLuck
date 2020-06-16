@@ -1,9 +1,10 @@
 configversion: 1.1
 messagenotfound: "&cThis message was not found ! Please contact a administrator as fast as you can !"
 materialsverified:
-  - "56:0"
-  - "14:0"
-  - "129:0"
+  - "DIAMOND_ORE:0"
+  - "GOLD_ORE:0"
+  - "EMERALD_ORE:0"
+  - "IRON_ORE:0;IRON_INGOT"
 
 #The plugin doesn't count the blocks broke in creative
 creativebypass: true
