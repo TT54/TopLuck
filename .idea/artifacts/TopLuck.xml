@@ -2,7 +2,7 @@
   <artifact type="jar" build-on-make="true" name="TopLuck">
     <output-path>$PROJECT_DIR$/out/artifacts/TopLuck</output-path>
     <root id="archive" name="TopLuck.jar">
-      <element id="module-output" name="TopLuck" />
+      <element id="module-output" name="TopLuck1.13Heigher" />
     </root>
   </artifact>
 </component>

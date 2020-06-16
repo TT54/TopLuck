@@ -2,6 +2,7 @@ main: fr.tt54.topluck.Main
 name: TopLuck
 version: BETA 1.1.0
 author: TT54
+api-version: 1.13
 commands:
   topluck:
     description: Ouvre le menu du TopLuck

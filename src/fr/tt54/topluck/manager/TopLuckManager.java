@@ -52,49 +52,21 @@ public class TopLuckManager {
                     }
                 } catch (NumberFormatException ignore) {
                 }
-                int displayId = Material.getMaterial(typeName).getId();
+                String displayItemType = typeName;
                 try {
                     try {
-                        displayId = Integer.parseInt(matId.split(";")[1]);
+                        displayItemType = matId.split(";")[1];
                     } catch (ArrayIndexOutOfBoundsException ignore) {
                     }
                 } catch (NumberFormatException ignore) {
                 }
-                System.out.println(displayId);
-                MaterialType type = new MaterialType(typeName, meta, displayId);
+                System.out.println(displayItemType);
+                MaterialType type = new MaterialType(typeName, meta, displayItemType);
                 if (!containsBlock(type)) {
                     blockCounted.add(type);
                 }
             } else {
-                try {
-                    int id = Integer.parseInt(matId.split(":")[0]);
-                    if (Material.getMaterial(id) == null) {
-                        System.out.println(Main.getMessages().getMessage("materialnotfound", "%id%", matId));
-                    } else {
-                        int meta = 0;
-                        try {
-                            try {
-                                meta = Integer.parseInt(matId.split(":")[1].split(";")[0]);
-                            } catch (ArrayIndexOutOfBoundsException ignore) {
-                            }
-                        } catch (NumberFormatException ignore) {
-                        }
-                        int displayId = id;
-                        try {
-                            try {
-                                displayId = Integer.parseInt(matId.split(";")[1]);
-                            } catch (ArrayIndexOutOfBoundsException ignore) {
-                            }
-                        } catch (NumberFormatException ignore) {
-                        }
-                        MaterialType type = new MaterialType(id, meta, displayId);
-                        if (!containsBlock(type)) {
-                            blockCounted.add(type);
-                        }
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println(Main.getMessages().getMessage("materialnotfound", "%id%", matId));
-                }
+                System.out.println(Main.getMessages().getMessage("materialnotfound", "%id%", matId));
             }
         }
     }
@@ -164,7 +136,7 @@ public class TopLuckManager {
 
     public static int getShowedStoneMined(Player player) {
         if (Main.getInstance().getConfig().getBoolean("showlastonprofil")) {
-            return getResourceMinedFromLastCo(player, new MaterialType(1, 0));
+            return getResourceMinedFromLastCo(player, new MaterialType(Material.STONE.name(), 0));
         }
         return getTotalStoneMined(player);
     }
@@ -185,11 +157,11 @@ public class TopLuckManager {
 
     public static String getLastStonePercent(Player player) {
         DecimalFormat result = new DecimalFormat("##.##");
-        double total = getResourceMinedFromLastCo(player, new MaterialType(1, 0));
+        double total = getResourceMinedFromLastCo(player, new MaterialType(Material.STONE.name(), 0));
         for (MaterialType type : blockCounted) {
             total += getResourceMinedFromLastCo(player, type);
         }
-        return (getResourceMinedFromLastCo(player, new MaterialType(1, 0)) / total * 100 > 0) ? result.format(getResourceMinedFromLastCo(player, new MaterialType(1, 0)) / total * 100) : "0.00";
+        return (getResourceMinedFromLastCo(player, new MaterialType(Material.STONE.name(), 0)) / total * 100 > 0) ? result.format(getResourceMinedFromLastCo(player, new MaterialType(Material.STONE.name(), 0)) / total * 100) : "0.00";
     }
 
     public static String getTotalStonePercent(Player player) {
@@ -222,7 +194,7 @@ public class TopLuckManager {
 
     public static String getLastOrePercent(Player player, MaterialType materialType) {
         DecimalFormat result = new DecimalFormat("##.##");
-        double total = getResourceMinedFromLastCo(player, new MaterialType(1, 0));
+        double total = getResourceMinedFromLastCo(player, new MaterialType(Material.STONE.name(), 0));
         for (MaterialType type : blockCounted) {
             total += getResourceMinedFromLastCo(player, type);
         }
@@ -238,11 +210,11 @@ public class TopLuckManager {
         return (topLuck.getInt(player.getName() + "." + materialType.getType().name() + ":" + materialType.getData()) / total * 100 > 0) ? result.format(topLuck.getInt(player.getName() + "." + materialType.getType().name() + ":" + materialType.getData()) / total * 100).replace(",", ".") : "0.00";
     }
 
-    public static void addResource(ItemStack item, int itemId) {
-        if (!containsBlock(new MaterialType(item.getType().name(), item.getData().getData(), itemId))) {
-            blockCounted.add(new MaterialType(item.getType().name(), item.getData().getData(), itemId));
+    public static void addResource(ItemStack item, String displayItemType) {
+        if (!containsBlock(new MaterialType(item.getType().name(), item.getData().getData(), displayItemType))) {
+            blockCounted.add(new MaterialType(item.getType().name(), item.getData().getData(), displayItemType));
             List<String> blocks = Main.getInstance().getConfig().getStringList("materialsverified");
-            blocks.add(item.getType().name() + ":" + item.getData().getData() + ";" + itemId);
+            blocks.add(item.getType().name() + ":" + item.getData().getData() + ";" + displayItemType);
             Main.getInstance().getConfig().set("materialsverified", blocks);
             Main.getInstance().saveConfig();
         }

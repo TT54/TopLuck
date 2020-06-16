@@ -6,30 +6,18 @@ public class MaterialType {
 
     private Material type;
     private int data;
-    private int displayId;
-
-    public MaterialType(int id, int data) {
-        this.type = Material.getMaterial(id);
-        this.data = data;
-        this.displayId = id;
-    }
+    private String displayName;
 
     public MaterialType(String materialName, int data) {
         this.type = Material.getMaterial(materialName);
         this.data = data;
-        this.displayId = this.type.getId();
+        this.displayName = this.type.name();
     }
 
-    public MaterialType(int id, int data, int displayId) {
-        this.type = Material.getMaterial(id);
-        this.data = data;
-        this.displayId = displayId;
-    }
-
-    public MaterialType(String materialName, int data, int displayId) {
+    public MaterialType(String materialName, int data, String displayName) {
         this.type = Material.getMaterial(materialName);
         this.data = data;
-        this.displayId = displayId;
+        this.displayName = displayName;
     }
 
     public int getData() {
@@ -40,7 +28,7 @@ public class MaterialType {
         return type;
     }
 
-    public int getDisplayId() {
-        return displayId;
+    public String getDisplayName() {
+        return displayName;
     }
 }

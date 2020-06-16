@@ -41,7 +41,7 @@ public class ItemBuilder {
 
 
     public ItemBuilder setSkullOf(OfflinePlayer player) {
-        if (this.item.getType() == Material.SKULL_ITEM) {
+        if (this.item.getType() == Material.PLAYER_HEAD) {
             SkullMeta meta = (SkullMeta) this.item.getItemMeta();
             meta.setOwner(player.getName());
             this.item.setItemMeta(meta);

@@ -37,7 +37,7 @@ public class InvManager {
         }
 
         for (int i = page * 9 * 5; i < (Math.min(players.size(), (page + 1) * 9 * 5)); i++) {
-            ItemBuilder builder = new ItemBuilder(new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())).setName("§6" + (players.get(i)).getName()).setSkullOf(players.get(i))
+            ItemBuilder builder = new ItemBuilder(new ItemStack(Material.PLAYER_HEAD, 1, (short) SkullType.PLAYER.ordinal())).setName("§6" + (players.get(i)).getName()).setSkullOf(players.get(i))
                     .addLoreLine("§7Stone : §f" + TopLuckManager.getStonePercent(players.get(i)) + "% §8(" + TopLuckManager.getShowedStoneMined(players.get(i)) + ")");
             for (MaterialType type : TopLuckManager.blockCounted) {
                 String name = type.getType().name().substring(0, 1).toUpperCase() + type.getType().name().toLowerCase().replace("_", " ").substring(1);
@@ -64,13 +64,13 @@ public class InvManager {
 
         ItemBuilder stoneBuilder = new ItemBuilder(Material.STONE);
         stoneBuilder.setName("§7Stone");
-        stoneBuilder.addLoreLine(Main.getMessages().getMessage("inventory.lastconnection", "%percent%", TopLuckManager.getLastStonePercent(Bukkit.getPlayer(playerName)), "%number%", "" + TopLuckManager.getResourceMinedFromLastCo(Bukkit.getPlayer(playerName), new MaterialType(1, 0))));
+        stoneBuilder.addLoreLine(Main.getMessages().getMessage("inventory.lastconnection", "%percent%", TopLuckManager.getLastStonePercent(Bukkit.getPlayer(playerName)), "%number%", "" + TopLuckManager.getResourceMinedFromLastCo(Bukkit.getPlayer(playerName), new MaterialType(Material.STONE.name(), 0))));
         stoneBuilder.addLoreLine(Main.getMessages().getMessage("inventory.begin", "%percent%", TopLuckManager.getTotalStonePercent(Bukkit.getPlayer(playerName)), "%number%", "" + TopLuckManager.getTotalStoneMined(Bukkit.getPlayer(playerName))));
         inv.setItem(0, stoneBuilder.build());
 
         for (int i = 0; i < Math.min(9 * 5 - 1, TopLuckManager.blockCounted.size()); i++) {
             MaterialType type = TopLuckManager.blockCounted.get(i);
-            ItemBuilder builder = new ItemBuilder(new ItemStack(type.getDisplayId(), 1, (byte) type.getData()));
+            ItemBuilder builder = new ItemBuilder(new ItemStack(Material.getMaterial(type.getDisplayName()), 1, (byte) type.getData()));
 
             String name = type.getType().name().substring(0, 1).toUpperCase() + type.getType().name().toLowerCase().replace("_", " ").substring(1);
             if (type.getData() != 0)

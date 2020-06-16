@@ -42,6 +42,7 @@ public class CmdTopLuck implements CommandExecutor, TabCompleter {
                         sender.sendMessage(Main.getMessages().getBadUsageMessage("/" + label + " reload"));
                         return false;
                     }
+                    TopLuckManager.saveTopLuck();
                     Main.getInstance().reload();
                     System.out.println(Main.getMessages().getMessage("reload"));
                     for (Player player : Bukkit.getOnlinePlayers()) {
@@ -60,12 +61,12 @@ public class CmdTopLuck implements CommandExecutor, TabCompleter {
                     return false;
                 }
 
-                int displayId = ((Player) sender).getItemInHand().getTypeId();
+                String displayItemName = ((Player) sender).getInventory().getItemInMainHand().getType().name();
                 if (args.length == 2) {
-                    try {
-                        displayId = Integer.parseInt(args[1]);
-                    } catch (NumberFormatException e) {
-                        sender.sendMessage(Main.getMessages().getBadUsageMessage("/" + label + " " + args[0] + " [DisplayItemID]"));
+                    if (Material.getMaterial(args[1].toUpperCase()) != null) {
+                        displayItemName = args[1].toUpperCase();
+                    } else {
+                        sender.sendMessage(Main.getMessages().getMessage("materialnotfound", "%id%", args[1]));
                         return false;
                     }
                 }
@@ -75,12 +76,12 @@ public class CmdTopLuck implements CommandExecutor, TabCompleter {
                     return false;
                 }
 
-                if (((Player) sender).getItemInHand() == null || ((Player) sender).getItemInHand().getType() == Material.AIR) {
+                if (((Player) sender).getInventory().getItemInMainHand().getType() == Material.AIR) {
                     sender.sendMessage(Main.getMessages().getMessage("notiteminhand"));
                     return false;
                 }
 
-                TopLuckManager.addResource(((Player) sender).getItemInHand(), displayId);
+                TopLuckManager.addResource(((Player) sender).getItemInHand(), displayItemName);
                 sender.sendMessage(Main.getMessages().getMessage("blockregistered", "%type%", ((Player) sender).getItemInHand().getType().name(), "%data%", "" + ((Player) sender).getItemInHand().getData().getData()));
 
                 return true;
