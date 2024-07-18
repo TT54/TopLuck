@@ -1,0 +1,14 @@
+configversion: 1.1
+messagenotfound: "&cThis message was not found ! Please contact a administrator as fast as you can !"
+materialsverified:
+  - "DIAMOND_ORE"
+  - "GOLD_ORE"
+  - "EMERALD_ORE"
+  - "IRON_ORE;IRON_INGOT"
+
+#The plugin doesn't count the blocks broke in creative
+creativebypass: true
+#If true, show the statistics of the actual mining session. If false, show all the blocks mined from the installation of the plugin
+showlastonprofil: true
+#If false, the players who have the permission topluck.showbypass are not showed in the topluck inventory
+showbypass: true

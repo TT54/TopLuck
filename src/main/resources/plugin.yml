@@ -1,0 +1,8 @@
+name: TopLuck
+version: '${version}'
+main: fr.tt54.topluck.Main
+api-version: '1.13'
+author: TT54
+commands:
+  topluck:
+    description: Ouvre le menu du TopLuck

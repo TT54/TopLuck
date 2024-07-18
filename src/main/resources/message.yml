@@ -1,0 +1,32 @@
+version: "1.2"
+pluginenable: "&aTopLuck is enable"
+plugindisable: "&cTopLuck is disable"
+
+badconfigversion: "&cThe TopLuck's config version (%configversion%) is not up-to-date (%newversion%). Please delete it after saving your changes"
+badmessagesversion: "&cThe TopLuck's messages version (%messagesversion%) is not up-to-date (%newversion%). Please delete message.yml after saving your changes"
+reload: "&aTopLuck has been reloaded"
+notplayer: "&cYou must be a player to execute this command"
+notpermission: "&cYou don't have the permission to execute this command"
+badusage: "&cThe good usage is : %usage%"
+notconnected: "&cThe targeted player is not connected"
+internalerror: "&4An internal error has occured. Please contact a server admin"
+
+materialnotfound: "&cThe type %id% was not found"
+
+notiteminhand: "&cYou must have an item in your hand !"
+blockregistered: "&aThe block %type% was registered"
+
+topluckopened: "&aTopLuck's inventory was opened"
+playertopluckopened: "&aYou opened %player%'s topluck inventory"
+
+clear: "§cYou was been cleared"
+cleared: "§aYou have been cleared %player%"
+
+inventory:
+  lastconnection: "&7Last connexion : &f%percent%% §8(%number%)"
+  begin: "&7All mined : &f%percent%% §8(%number%)"
+  quit: "&cQuit"
+  teleport: "&9Teleport"
+  clear: "&cClear"
+  nextpage: "&6Next Page"
+  lastpage: "&6Last Page"
